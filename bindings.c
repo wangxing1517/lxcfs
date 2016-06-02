@@ -32,6 +32,13 @@
 
 #include "config.h" // for VERSION
 
+#include "syscall.h"
+#ifdef SYS_setns
+int setns(int fd, int nstype) {
+    return syscall(SYS_setns, fd, nstype);
+}
+#endif
+
 enum {
 	LXC_TYPE_CGDIR,
 	LXC_TYPE_CGFILE,

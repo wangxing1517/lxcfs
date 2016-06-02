@@ -1,0 +1,23 @@
+# How to install
+./bootstrap.sh
+./configure
+make
+
+# How to use
+1. start lxcfs
+sudo mkdir -p /var/lib/lxcfs
+./lxcfs /var/lib/lxcfs
+
+2. start container
+docker run -it --privileged=true \
+    -m 100m \
+    -v /var/lib/lxcfs/proc/cpuinfo:/proc/cpuinfo:rw \
+    -v /var/lib/lxcfs/proc/diskstats:/proc/diskstats:rw \
+    -v /var/lib/lxcfs/proc/meminfo:/proc/meminfo:rw \
+    -v /var/lib/lxcfs/proc/stat:/proc/stat:rw \
+    -v /var/lib/lxcfs/proc/swaps:/proc/swaps:rw \
+    -v /var/lib/lxcfs/proc/uptime:/proc/uptime:rw \
+    ubuntu:14.04 /bin/bash
+
+3. verify result
+now use free -m in container, you will see only 100m
